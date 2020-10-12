@@ -12,6 +12,7 @@ export default (state = initialState, action: AnyAction) => {
   console.log(action, 'action')
   switch (action.type) {
     case 'SET_TOKENS':
+      console.log(action.payload, "tokrnnn")
       return {
         ...state,
         token: action.payload
@@ -39,8 +40,8 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: true
       }
     case 'LOGIN_SUCCESS':
-      AsyncStorage.setItem('token', JSON.stringify(action.payload.data.data.token))
-      console.log(action.payload.data.data.is_merchant, 'action.payload.data.data.is_merchant')
+      AsyncStorage.setItem('token', JSON.stringify(action.payload.data.data.token));
+      AsyncStorage.getItem('is_merchant', action.payload.data.data.is_merchant);
       return {
         ...state,
         isLoading: false,

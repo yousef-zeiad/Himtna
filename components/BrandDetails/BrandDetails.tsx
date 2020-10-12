@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Header } from './Header';
@@ -14,8 +14,9 @@ const { width } = Dimensions.get('window');
 export default function BrandDetails({ navigation }) {
   const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand');
+  const [promotions, setProm] = useState([]);
   const { is_merchant } = useSelector(state => state.auth)
-  console.log(brand)
+
   return (
     <>
       <Header title={brand.name.en} navigation={navigation} />
@@ -32,7 +33,8 @@ export default function BrandDetails({ navigation }) {
         <Text style={{ marginTop: 33, fontSize: 16, fontWeight: 'bold' }}>
           Offers
         </Text>
-        <PromotionOffers brands={brand} navigation={navigation} onPress={() => { is_merchant === 0 && navigation.push('OfferDetails', { brand, promotion }) }} />
+        {<PromotionOffers brands={brand} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion, brand })} />}
+
         {/* if is merchant true you have to return this button */}
       </MainContainer>
       {is_merchant === 1 && <ButtonsContainer>

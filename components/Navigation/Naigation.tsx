@@ -89,7 +89,8 @@ const App = createSharedElementStackNavigator({
   QRPage,
   BrandDetailsPage,
   CardInsurancePage,
-  profilePage
+  profilePage,
+
 }, {
   mode: 'modal',
   headerMode: 'none',
@@ -113,12 +114,11 @@ const Start = createStackNavigator({
   SignUp,
   VerifyPage
 }, {
-  mode: 'modal',
   headerMode: 'none',
 });
 
 const AuthStack = createStackNavigator({
-  Start
+  Start,
 }, {
   mode: 'modal',
   headerMode: 'none',

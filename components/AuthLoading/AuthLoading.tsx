@@ -10,7 +10,6 @@ export default function AuthLoading({ navigation }) {
   useEffect(() => {
     async function getTokens() {
       const token = await localStorage.get('token');
-      console.log(token, "tokens");
       if (token) {
         dispatch(actions.auth.setTokens(token))
         navigation.navigate('App');

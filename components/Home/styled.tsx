@@ -54,7 +54,7 @@ const PromotionTileTitle = styled.Text`
   fontSize: 14px;
   lineHeight: 28px;
   color: ${Colors.subtitle};
-  marginBottom: 10px;
+  marginBottom: 1px;
 `;
 const PromotionTileAddress = styled.Text`
   fontWeight: bold;
@@ -248,8 +248,8 @@ const ServeiceTitle = styled.Text`
 
 `;
 const PromotionOffersLogo = styled.View`
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   top: 10px;
   right:3px;
   bottom:0px;
@@ -278,7 +278,8 @@ const PromotionOffersPhotosContainer = styled.View`
   height: 100%;
   paddingRight: 5px;
   paddingLeft: 5px;
-  padding-bottom:40px
+  padding-bottom:60px;
+  z-index:1
 `;
 const PromotionOffersCover = styled(FastImage)`
   width: 100%;
@@ -295,7 +296,7 @@ export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
       <PromotionOffersTop>
         <PromotionOffersContainer background={Colors.white}>
           <PromotionOffersWrapper>
-            <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
+            <TouchableOpacity onPress={(onPress)} activeOpacity={0.8}>
               <PromotionOffersPhotosContainer>
                 {
                   discount === 0 ? <></> :
@@ -303,7 +304,7 @@ export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
                       <PromotionDescount>
                         Up To
                 </PromotionDescount>
-                      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}>{`${discount}%`}</Text>
+                      <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 15 }}>{`${discount}%`}</Text>
                     </PromotionOffersLogo>
                 }
                 <PromotionOffersCover

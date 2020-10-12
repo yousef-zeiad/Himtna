@@ -13,11 +13,14 @@ import { DontHaveTitle, SignupTitle, SignupButton, BackgroundView, Container } f
 export default function CheckNumberForm({ navigation, props }) {
   const { control, handleSubmit, errors } = useForm();
   const onChange = args => ({ value: args[0].nativeEvent.text.toLowerCase() });
-  const onSubmit = (phone) => {
-    navigation.push('VerifyPage', { phone })
+  const onSubmit = (form) => {
+    dispatch(actions.auth.login({ ...form, phone: form.phone }))
+    navigation.push('VerifyPage', { form })
   }
   const onSubmitHandler = useCallback(handleSubmit(onSubmit), [handleSubmit, onSubmit]);
   const refs = {};
+  const dispatch = useDispatch()
+
 
   return (
     <>

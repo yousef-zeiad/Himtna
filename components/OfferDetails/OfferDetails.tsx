@@ -9,7 +9,7 @@ import { ButtonsContainer, Button, ButtonText } from '../Shared/Shared';
 export default function OfferDetails({ navigation }) {
   const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand')
-
+  console.log(promotion, "promotionssss")
   return (
     <>
       <Header title={'Offers Details'} navigation={navigation} />
@@ -26,7 +26,7 @@ export default function OfferDetails({ navigation }) {
           <Discount title={'Discount'} offer={brand ? brand.discount : promotion.discounted} />
           <Valid title={'Valid till'} date={'20/10/2017'} />
           <ButtonsContainer>
-            <Button onPress={() => navigation.push('QRPage', { promotion, brand })} >
+            <Button onPress={() => navigation.push('QRPage', { promotion: promotion, brand })} >
               <ButtonText>Get QR Code</ButtonText>
             </Button>
           </ButtonsContainer>

@@ -9,24 +9,34 @@ import {
   ButtonContainer, CategoryTile, PromotionOffers,
   CategoriesList, PromotionList, BrandsList
 } from './styled';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeView } from '../AuthLoading/styled';
-
-export default function Home({ navigation }) {
+const wait = (timeout) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
+export default function Home({ navigation, refetchBranches }) {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(200).then(() => setRefreshing(false));
+  }, []);
   const dispatch = useDispatch();
   const toggleFav = navigation.getParam('toggleFav');
-  const [data, setData] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [promotions, setProm] = useState([]);
   const [brands, setBrand] = useState([]);
+  const [currentCategoryId, setCurrentCategoryId] = useState()
   const { is_merchant } = useSelector(state => state.auth)
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await dispatch(actions.main.loadCategories());
-      setData(result.payload.data.data);
+      setCategories(result.payload.data.data);
     }
     fetchData()
-  }, [setData]);
+  }, [setCategories]);
 
   useEffect(() => {
     const fetchPromotion = async () => {
@@ -38,28 +48,35 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const fetchBrand = async () => {
-      const result = await dispatch(actions.main.getBrands(data));
+      const result = await dispatch(actions.main.getBrands());
       setBrand(result.payload.data.data);
+      console.log(result.payload.data.data, "Brands")
     }
     fetchBrand()
   }, [setBrand]);
 
+
+  const getBrands = (categoryId) => {
+    setCurrentCategoryId(categoryId)
+  };
   return (
     <>
       <Header navigation={navigation} />
-      <StackPage >
-        <Body nestedScrollEnabled={true}>
+      <StackPage>
+        <Body nestedScrollEnabled={true} refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
           <Search navigation={navigation} />
-          {is_merchant === 0 && promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
+          {promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
             {promotions.map(promotion =>
               <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => { }} />
             )}
           </PromotionList> : <SafeView forceInset={{ top: 'always' }}>
-              {is_merchant === 0 && <ActivityIndicator />}
+              {<ActivityIndicator />}
             </SafeView>}
 
           <Container>
-            {is_merchant === 0 && <ButtonContainer>
+            {<ButtonContainer>
               <Title fontSize={16}>
                 All Offers
               </Title>
@@ -72,28 +89,28 @@ export default function Home({ navigation }) {
               </Title>
               </TouchableOpacity>
             </ButtonContainer>}
-            {is_merchant === 0 && <CategoriesList bounces horizontal contentContainerStyle={{ paddingLeft: 20 }} showsHorizontalScrollIndicator={false}>
-              {data.map(category => <CategoryTile category={category} key={category.id}
-                onPress={() => { category.id }}
-                selected={''} />)}
+            {<CategoriesList bounces horizontal contentContainerStyle={{ paddingLeft: 20 }} showsHorizontalScrollIndicator={false}>
+              {categories.map(category =>
+                <CategoryTile
+                  category={category} key={category.id}
+                  onPress={() => { getBrands(category.id) }}
+                  selected={category.id === category} />)}
             </CategoriesList>}
-            <Title fontSize={16} style={{ paddingLeft: 20 }}>
-              Restorants
+            <Title fontSize={16} style={{ paddingLeft: 25 }}>
+              All
             </Title>
-            {brands ? <BrandsList
+            {<BrandsList
               horizontal={false}
               numColumns={2}
-              data={brands}
+              data={brands.filter(brand => brand.category_id === currentCategoryId)}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (<PromotionOffers brands={item} key={item.id}
                 navigation={navigation}
                 onPress={() => navigation.push('BrandDetailsPage', { brand: item, promotions, is_merchant })} />)}
-              onEndReachedThreshold={1}
+              onEndReachedThreshold={8}
               contentContainerStyle={{ justifyContent: 'center', alignSelf: 'center' }}
               nestedScrollEnabled={true}
-            /> : <SafeView forceInset={{ top: 'always' }}>
-                <ActivityIndicator />
-              </SafeView>}
+            />}
           </Container>
         </Body>
       </StackPage>

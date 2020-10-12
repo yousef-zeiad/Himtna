@@ -32,7 +32,7 @@
 		<dict/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>himtna would like to access your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>

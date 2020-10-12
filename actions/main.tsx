@@ -16,7 +16,7 @@ export function loadCategories() {
     })
   }
 }
-export function getBrands(data) {
+export function getBrands() {
   return (dispatch, getState) => {
     const state = getState();
     const token = state.auth.token.token;
@@ -29,7 +29,7 @@ export function getBrands(data) {
             'Authorization': 'Bearer ' + token
           },
         },
-        data: { data }
+        // data: { data }
       }
     })
   }
