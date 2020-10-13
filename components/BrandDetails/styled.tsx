@@ -55,9 +55,11 @@ export const BrandLogo = styled.View`
   paddingRight:3px;
 `;
 export const Logo = styled(FastImage)`
-  height:64px;
-  width:76px;
-  borderRadius:50px
+  height:70px;
+  width:70px;
+  borderRadius:50px;
+  justify-content:center;
+  align-self: center;
 `;
 
 export const MainContainer = styled.ScrollView`

@@ -55,10 +55,14 @@ export default function Home({ navigation, refetchBranches }) {
     fetchBrand()
   }, [setBrand]);
 
-
   const getBrands = (categoryId) => {
-    setCurrentCategoryId(categoryId)
+    if (categoryId) {
+      setCurrentCategoryId(categoryId)
+    }
   };
+
+
+
   return (
     <>
       <Header navigation={navigation} />
@@ -74,7 +78,6 @@ export default function Home({ navigation, refetchBranches }) {
           </PromotionList> : <SafeView forceInset={{ top: 'always' }}>
               {<ActivityIndicator />}
             </SafeView>}
-
           <Container>
             {<ButtonContainer>
               <Title fontSize={16}>
@@ -94,7 +97,7 @@ export default function Home({ navigation, refetchBranches }) {
                 <CategoryTile
                   category={category} key={category.id}
                   onPress={() => { getBrands(category.id) }}
-                  selected={category.id === category} />)}
+                  selected={category.id === currentCategoryId} />)}
             </CategoriesList>}
             <Title fontSize={16} style={{ paddingLeft: 25 }}>
               All
@@ -107,7 +110,7 @@ export default function Home({ navigation, refetchBranches }) {
               renderItem={({ item }) => (<PromotionOffers brands={item} key={item.id}
                 navigation={navigation}
                 onPress={() => navigation.push('BrandDetailsPage', { brand: item, promotions, is_merchant })} />)}
-              onEndReachedThreshold={8}
+              onEndReachedThreshold={.5}
               contentContainerStyle={{ justifyContent: 'center', alignSelf: 'center' }}
               nestedScrollEnabled={true}
             />}

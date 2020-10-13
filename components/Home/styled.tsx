@@ -205,7 +205,7 @@ export const CategoriesList = styled.ScrollView`
   marginBottom: 36px;
 `;
 export const CategoryTile = ({ category: { image, name } = {}, onPress, selected }) => (
-  <CategoryTileContainer onPress={onPress}>
+  <CategoryTileContainer onPress={onPress} activeOpacity={0.8}>
     <CategoryTileWrapper>
       <CategoryTilePictureContainer selected={selected}>
         <CategoryTilePicture
