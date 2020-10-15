@@ -21,7 +21,19 @@ export default function CheckNumberForm({ navigation, props }) {
   const refs = {};
   const dispatch = useDispatch()
 
-
+  useEffect(() => {
+    async function getTokens() {
+      const token = await localStorage.get('token');
+      console.log(token, 'token')
+      if (token) {
+        dispatch(actions.auth.setTokens(token))
+        navigation.push('Home');
+      } else {
+        navigation.push('Auth');
+      }
+    };
+    getTokens();
+  }, []);
   return (
     <>
       <BackgroundView />

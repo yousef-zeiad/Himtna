@@ -55,13 +55,15 @@ export default function Home({ navigation, refetchBranches }) {
     fetchBrand()
   }, [setBrand]);
 
-  const getBrands = (categoryId) => {
-    if (categoryId) {
-      setCurrentCategoryId(categoryId)
-    }
+  const toggleBrands = (categoryId) => {
+    setCurrentCategoryId(categoryId)
+
   };
-
-
+  useEffect(() => {
+    toggleBrands(brands)
+    console.log(brands.filter(brand => brand.category_id === currentCategoryId))
+  }, [])
+  //fix me when you pull again
 
   return (
     <>
@@ -96,7 +98,7 @@ export default function Home({ navigation, refetchBranches }) {
               {categories.map(category =>
                 <CategoryTile
                   category={category} key={category.id}
-                  onPress={() => { getBrands(category.id) }}
+                  onPress={() => { toggleBrands(category.id) }}
                   selected={category.id === currentCategoryId} />)}
             </CategoriesList>}
             <Title fontSize={16} style={{ paddingLeft: 25 }}>
@@ -105,7 +107,7 @@ export default function Home({ navigation, refetchBranches }) {
             {<BrandsList
               horizontal={false}
               numColumns={2}
-              data={brands.filter(brand => brand.category_id === currentCategoryId)}
+              data={brands}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (<PromotionOffers brands={item} key={item.id}
                 navigation={navigation}

@@ -90,12 +90,12 @@ export const BrandsDescription = ({ navigation, description, location, sevices, 
         {location ? location : ''}
       </Text>
     </Text>
-    <Text style={{ marginTop: 6 }}>
+    {/* <Text style={{ marginTop: 6 }}>
       Phone number :
       <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
         0799123456
       </Text>
-    </Text>
+    </Text> */}
   </>
 )
 export const PromotionOffersContainer = styled.TouchableOpacity`
@@ -141,7 +141,7 @@ const PromotionTileTitleContainer = styled.View`
   borderBottomRightRadius: 14px;
   borderBottomLeftRadius: 14px;
   width: 100%;
-  height: 84px;
+  height: 80px;
   position: absolute;
   bottom: 0px;
   backgroundColor: ${Colors.white};
