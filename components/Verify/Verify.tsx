@@ -18,7 +18,7 @@ export default function Verfiy({ navigation }) {
   const dispatch = useDispatch();
   const onSubmit = (form) => {
     console.log({ ...form, phone: phone.phone }, '...form, phone: phone.phone')
-    dispatch(actions.auth.login({ ...form, phone: phone.phone, }))
+    dispatch(actions.auth.login({ ...form, phone: phone.phone }))
     async function getTokens() {
       const token = await localStorage.get('token');
       console.log(token, 'token')
@@ -30,22 +30,23 @@ export default function Verfiy({ navigation }) {
       }
     };
     getTokens();
+
   }
   const onSubmitHandler = useCallback(handleSubmit(onSubmit), [handleSubmit, onSubmit]);
 
-  // useEffect(() => {
-  //   async function getTokens() {
-  //     const token = await localStorage.get('token');
-  //     console.log(token, 'token')
-  //     if (token) {
-  //       dispatch(actions.auth.setTokens(token))
-  //       navigation.push('Home');
-  //     } else {
-  //       navigation.push('Auth');
-  //     }
-  //   };
-  //   getTokens();
-  // }, []);
+  useEffect(() => {
+    async function getTokens() {
+      const token = await localStorage.get('token');
+      console.log(token, 'token')
+      if (token) {
+        dispatch(actions.auth.setTokens(token))
+        navigation.push('Home');
+      } else {
+        navigation.push('Auth');
+      }
+    };
+    getTokens();
+  }, [])
 
   return (
     <>
@@ -75,7 +76,7 @@ export default function Verfiy({ navigation }) {
         />
         {errors.otp && <ErrorText style={{ alignSelf: 'center' }}>Wrong Code</ErrorText>}
         <ButtonsContainer>
-          <Button onPress={(onSubmitHandler)}>
+          <Button onPress={onSubmitHandler}>
             <ButtonText>Verify</ButtonText>
           </Button>
         </ButtonsContainer>

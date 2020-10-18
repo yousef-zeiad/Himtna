@@ -9,14 +9,15 @@ import {
   ButtonContainer, CategoryTile, PromotionOffers,
   CategoriesList, PromotionList, BrandsList
 } from './styled';
-import { View, TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
+import { TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeView } from '../AuthLoading/styled';
 const wait = (timeout) => {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }
-export default function Home({ navigation, refetchBranches }) {
+
+export default function Home({ navigation }) {
   const [refreshing, setRefreshing] = React.useState(false);
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -31,11 +32,11 @@ export default function Home({ navigation, refetchBranches }) {
   const { is_merchant } = useSelector(state => state.auth)
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategories = async () => {
       const result = await dispatch(actions.main.loadCategories());
       setCategories(result.payload.data.data);
     }
-    fetchData()
+    fetchCategories()
   }, [setCategories]);
 
   useEffect(() => {
@@ -50,20 +51,14 @@ export default function Home({ navigation, refetchBranches }) {
     const fetchBrand = async () => {
       const result = await dispatch(actions.main.getBrands());
       setBrand(result.payload.data.data);
-      console.log(result.payload.data.data, "Brands")
     }
     fetchBrand()
   }, [setBrand]);
 
   const toggleBrands = (categoryId) => {
     setCurrentCategoryId(categoryId)
-
+    brands.filter(brand => brand.category_id === currentCategoryId)
   };
-  useEffect(() => {
-    toggleBrands(brands)
-    console.log(brands.filter(brand => brand.category_id === currentCategoryId))
-  }, [])
-  //fix me when you pull again
 
   return (
     <>

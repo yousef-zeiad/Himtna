@@ -20,7 +20,6 @@ export default function CheckNumberForm({ navigation, props }) {
   const onSubmitHandler = useCallback(handleSubmit(onSubmit), [handleSubmit, onSubmit]);
   const refs = {};
   const dispatch = useDispatch()
-
   useEffect(() => {
     async function getTokens() {
       const token = await localStorage.get('token');
@@ -33,7 +32,8 @@ export default function CheckNumberForm({ navigation, props }) {
       }
     };
     getTokens();
-  }, []);
+  }, [])
+
   return (
     <>
       <BackgroundView />

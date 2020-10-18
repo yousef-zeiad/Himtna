@@ -291,7 +291,7 @@ export const BrandsList = styled(FlatList)`
 `;
 
 export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
-  image, name, services, discount, description, id } = {} }) => (
+  logo, name, services, discount, description, id } = {} }) => (
     <PromotionOffersCard>
       <PromotionOffersTop>
         <PromotionOffersContainer background={Colors.white}>
@@ -308,7 +308,7 @@ export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
                     </PromotionOffersLogo>
                 }
                 <PromotionOffersCover
-                  source={image ? { uri: image } : require('../../assets/branch_placeholder.png')}
+                  source={logo ? { uri: logo } : require('../../assets/branch_placeholder.png')}
                   resizeMode={FastImage.resizeMode.cover}
                 />
               </PromotionOffersPhotosContainer>
