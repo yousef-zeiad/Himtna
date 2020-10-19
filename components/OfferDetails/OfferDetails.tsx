@@ -26,7 +26,7 @@ export default function OfferDetails({ navigation }) {
           <Discount title={'Discount'} offer={brand ? brand.discount : promotion.discounted} />
           <Valid title={'Valid till'} date={'20/10/2017'} />
           <ButtonsContainer>
-            <Button onPress={() => navigation.push('QRPage', { promotion: promotion, brand })} >
+            <Button onPress={() => navigation.push('QRPage', { promotion, brand })} >
               <ButtonText>Get QR Code</ButtonText>
             </Button>
           </ButtonsContainer>

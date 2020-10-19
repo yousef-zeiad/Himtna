@@ -18,46 +18,47 @@ const wait = (timeout) => {
 }
 
 export default function Home({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    wait(200).then(() => setRefreshing(false));
-  }, []);
+  const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
-  const toggleFav = navigation.getParam('toggleFav');
   const [categories, setCategories] = useState([]);
   const [promotions, setProm] = useState([]);
   const [brands, setBrand] = useState([]);
   const [currentCategoryId, setCurrentCategoryId] = useState()
+
   const { is_merchant } = useSelector(state => state.auth)
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(200).then(() => setRefreshing(false));
+  }, []);
+
 
   useEffect(() => {
     const fetchCategories = async () => {
       const result = await dispatch(actions.main.loadCategories());
       setCategories(result.payload.data.data);
     }
-    fetchCategories()
-  }, [setCategories]);
-
-  useEffect(() => {
     const fetchPromotion = async () => {
       const result = await dispatch(actions.main.getPromotions());
       setProm(result.payload.data.data);
     }
-    fetchPromotion()
-  }, [setProm]);
-
-  useEffect(() => {
     const fetchBrand = async () => {
       const result = await dispatch(actions.main.getBrands());
       setBrand(result.payload.data.data);
     }
     fetchBrand()
-  }, [setBrand]);
+    fetchPromotion()
+    fetchCategories()
+  }, [setCategories, setBrand, setProm]);
+
+  useEffect(() => {
+    brands
+  }, [])
 
   const toggleBrands = (categoryId) => {
-    setCurrentCategoryId(categoryId)
-    brands.filter(brand => brand.category_id === currentCategoryId)
+    if (currentCategoryId === categoryId)
+      setCurrentCategoryId(null)
+    else
+      setCurrentCategoryId(categoryId)
   };
 
   return (
@@ -83,7 +84,7 @@ export default function Home({ navigation }) {
               <Title fontSize={16} style={{ color: '#c2c2c2' }}>
                 Offers Near Me
               </Title>
-              <TouchableOpacity onPress={() => console.log(toggleFav, 'toggleFav')}>
+              <TouchableOpacity onPress={() => console.log('toggleFav')}>
                 <Title fontSize={16} style={{ color: '#c2c2c2' }}>
                   My Favorites
               </Title>
