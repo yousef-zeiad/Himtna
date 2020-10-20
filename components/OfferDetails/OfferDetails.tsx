@@ -7,7 +7,7 @@ import {
 import { ButtonsContainer, Button, ButtonText } from '../Shared/Shared';
 
 export default function OfferDetails({ navigation }) {
-  const promotion = navigation.getParam('promotion');
+  const promotion = navigation.getParam('promotions');
   const brand = navigation.getParam('brand')
   console.log(promotion, "promotionssss")
   return (

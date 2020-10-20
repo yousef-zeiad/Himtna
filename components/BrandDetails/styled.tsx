@@ -76,7 +76,7 @@ export const BrandDescription = styled.Text`
 export const BrandsDescription = ({ navigation, description, location, sevices, brands: { open_time, close_time } = {} }) => (
   <>
     <BrandDescription>
-      {description ? description : ''}
+      {description ? description.en : ''}
     </BrandDescription>
     <Text style={{ marginTop: 13 }}>
       Working hours :
@@ -194,7 +194,7 @@ export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
                 {/* </SharedElement> */}
               </PromotionOffersPhotosContainer>
               <PromotionTileTitleContainer>
-                <PromotionTileTitle>{name.en}</PromotionTileTitle>
+                {/* <PromotionTileTitle>{name.en}</PromotionTileTitle> */}
                 <OfferContainer>
                   <TagImage source={require('../../assets/Logo.png')}
                     resizeMode={FastImage.resizeMode.contain}

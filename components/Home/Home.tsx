@@ -24,7 +24,6 @@ export default function Home({ navigation }) {
   const [promotions, setProm] = useState([]);
   const [brands, setBrand] = useState([]);
   const [currentCategoryId, setCurrentCategoryId] = useState()
-
   const { is_merchant } = useSelector(state => state.auth)
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -50,17 +49,10 @@ export default function Home({ navigation }) {
     fetchCategories()
   }, [setCategories, setBrand, setProm]);
 
-  useEffect(() => {
-    brands
-  }, [])
-
   const toggleBrands = (categoryId) => {
-    if (currentCategoryId === categoryId)
-      setCurrentCategoryId(null)
-    else
-      setCurrentCategoryId(categoryId)
+    setCurrentCategoryId(categoryId)
   };
-
+  console.log(promotions.map(promotion => promotion.id), 'hhhhh')
   return (
     <>
       <Header navigation={navigation} />
@@ -71,7 +63,7 @@ export default function Home({ navigation }) {
           <Search navigation={navigation} />
           {promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
             {promotions.map(promotion =>
-              <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => { }} />
+              <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => { promotion }} />
             )}
           </PromotionList> : <SafeView forceInset={{ top: 'always' }}>
               {<ActivityIndicator />}
@@ -103,7 +95,7 @@ export default function Home({ navigation }) {
             {<BrandsList
               horizontal={false}
               numColumns={2}
-              data={brands}
+              data={currentCategoryId ? brands.filter(brand => brand.category_id === currentCategoryId) : brands}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (<PromotionOffers brands={item} key={item.id}
                 navigation={navigation}

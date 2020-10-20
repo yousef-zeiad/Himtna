@@ -16,7 +16,7 @@ export default function BrandDetails({ navigation }) {
   const brand = navigation.getParam('brand');
   const [promotions, setProm] = useState([]);
   const { is_merchant } = useSelector(state => state.auth)
-
+  console.log(brand)
   return (
     <>
       <Header title={brand.name.en} navigation={navigation} />
