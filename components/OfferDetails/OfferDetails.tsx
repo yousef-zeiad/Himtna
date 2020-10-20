@@ -7,23 +7,24 @@ import {
 import { ButtonsContainer, Button, ButtonText } from '../Shared/Shared';
 
 export default function OfferDetails({ navigation }) {
-  const promotion = navigation.getParam('promotions');
+  const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand')
-  console.log(promotion, "promotionssss")
   return (
     <>
       <Header title={'Offers Details'} navigation={navigation} />
       <Container>
         <Logo />
         <MainContainer>
-          <BranchTile promotion={promotion ? promotion : brand} navigation={navigation} />
+
+          <BranchTile promotion={promotion} navigation={navigation} />
           <HeaderTitle>
-            {promotion ? promotion.name.en : brand.name.en}
+            {promotion.name.en}
           </HeaderTitle>
           <PlaceInfo
-            description={promotion ? promotion.description.en : brand.services.en}
+            description={promotion.description.en}
           />
-          <Discount title={'Discount'} offer={brand ? brand.discount : promotion.discounted} />
+          <Discount title={'Discount'} offer={promotion.discounted} />
+
           <Valid title={'Valid till'} date={'20/10/2017'} />
           <ButtonsContainer>
             <Button onPress={() => navigation.push('QRPage', { promotion, brand })} >

@@ -10,12 +10,6 @@ const initialState = {
 
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case 'SET_TOKENS':
-      console.log(action.payload, "tokrnnn")
-      return {
-        ...state,
-        token: action.payload
-      }
     case 'SIGNUP':
       return {
         ...state,
@@ -32,6 +26,12 @@ export default (state = initialState, action: AnyAction) => {
         ...state,
         isLoading: false,
         error: action.errors
+      }
+    case 'SET_TOKENS':
+      console.log(action.payload, "tokrnnn")
+      return {
+        ...state,
+        token: action.payload
       }
     case 'LOGIN':
       return {

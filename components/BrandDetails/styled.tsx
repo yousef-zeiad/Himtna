@@ -73,7 +73,7 @@ export const BrandDescription = styled.Text`
   paddingTop:50px
 `;
 
-export const BrandsDescription = ({ navigation, description, location, sevices, brands: { open_time, close_time } = {} }) => (
+export const BrandsDescription = ({ navigation, location, sevices, brands: { open_time, close_time, description } = {} }) => (
   <>
     <BrandDescription>
       {description ? description.en : ''}
@@ -178,8 +178,8 @@ const PromotionTileLogo = styled(FastImage)`
   position: absolute;
 `;
 
-export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
-  image, name, discount, logo } = {} }) => (
+export const PromotionOffers = ({ navigation, promotion, discounted, onPress, brands: {
+  image, name, logo } = {} }) => (
     <PromotionOffersCard>
       <PromotionOffersTop>
         <PromotionOffersContainer background={Colors.secondary}>
@@ -194,12 +194,12 @@ export const PromotionOffers = ({ navigation, promotion, onPress, brands: {
                 {/* </SharedElement> */}
               </PromotionOffersPhotosContainer>
               <PromotionTileTitleContainer>
-                {/* <PromotionTileTitle>{name.en}</PromotionTileTitle> */}
+                <PromotionTileTitle>{name.en}</PromotionTileTitle>
                 <OfferContainer>
                   <TagImage source={require('../../assets/Logo.png')}
                     resizeMode={FastImage.resizeMode.contain}
                     tintColor={Colors.primary} />
-                  <PromotionTileAddress>{`${discount} % Off`}</PromotionTileAddress>
+                  <PromotionTileAddress>{`${discounted} % Off`}</PromotionTileAddress>
                   {/* <TouchableOpacity onPress={onPress} style={{
                     top: 0,
                     right: 0,

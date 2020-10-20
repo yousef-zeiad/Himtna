@@ -8,15 +8,14 @@ import {
 } from './styled';
 import FastImage from 'react-native-fast-image';
 import { ButtonsContainer, Button, ButtonText } from '../Shared/Shared';
+import { PromotionTile } from '../Home/styled';
 
 const { width } = Dimensions.get('window');
 
 export default function BrandDetails({ navigation }) {
   const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand');
-  const [promotions, setProm] = useState([]);
   const { is_merchant } = useSelector(state => state.auth)
-  console.log(brand)
   return (
     <>
       <Header title={brand.name.en} navigation={navigation} />
@@ -29,11 +28,15 @@ export default function BrandDetails({ navigation }) {
         </BrandLogoContainer>
       </Container>
       <MainContainer>
-        <BrandsDescription sevices={brand.services.en} brands={brand} />
+        <BrandsDescription brands={brand} />
         <Text style={{ marginTop: 33, fontSize: 16, fontWeight: 'bold' }}>
           Offers
         </Text>
-        {<PromotionOffers brands={brand} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion, brand })} />}
+        {brand.promotions.map(promo =>
+          <PromotionOffers discounted={promo.discounted} key={promo.id} brands={promo} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion: promo, brand })} />
+        )}
+
+        {/* {<PromotionOffers brands={brand.promotions.map(promo=>promo)} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion, brand })} />} */}
 
         {/* if is merchant true you have to return this button */}
       </MainContainer>

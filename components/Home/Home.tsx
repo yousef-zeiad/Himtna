@@ -47,12 +47,12 @@ export default function Home({ navigation }) {
     fetchBrand()
     fetchPromotion()
     fetchCategories()
-  }, [setCategories, setBrand, setProm]);
+  }, []);
 
   const toggleBrands = (categoryId) => {
     setCurrentCategoryId(categoryId)
   };
-  console.log(promotions.map(promotion => promotion.id), 'hhhhh')
+
   return (
     <>
       <Header navigation={navigation} />
@@ -63,7 +63,7 @@ export default function Home({ navigation }) {
           <Search navigation={navigation} />
           {promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
             {promotions.map(promotion =>
-              <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => { promotion }} />
+              <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion })} />
             )}
           </PromotionList> : <SafeView forceInset={{ top: 'always' }}>
               {<ActivityIndicator />}

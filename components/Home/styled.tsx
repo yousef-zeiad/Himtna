@@ -114,8 +114,8 @@ export const PromotionTile = ({ navigation, id, promotion, onPress, promotion: {
       tension={50}
       friction={7}
       useNativeDriver
-      onPress={() => navigation.push('OfferDetails', { promotion })}
-    // onPress={onPress ? (() => onPress()) : (() => navigation.push('OfferDetails', {}))}
+      // onPress={() => navigation.push('OfferDetails', { promotion })}
+      onPress={onPress}
     >
       <PromotionTileTop >
         <PromotionTileContainer background={Colors.secondary}>
@@ -129,7 +129,7 @@ export const PromotionTile = ({ navigation, id, promotion, onPress, promotion: {
               </SharedElement>
             </PromotionTilePhotosContainer>
             <PromotionTileTitleContainer>
-              <PromotionTileTitle>{name.en}</PromotionTileTitle>
+              <PromotionTileTitle>{promotion.name.en}</PromotionTileTitle>
               <OfferContainer>
 
                 <TagImage source={require('../../assets/Logo.png')}

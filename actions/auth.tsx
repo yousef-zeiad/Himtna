@@ -50,7 +50,7 @@ export const login = ({ phone, otp }) => {
         url: `/login`,
         method: 'POST',
         headers: {
-          'Contetn-Type': 'application/json'
+          'Contatn-Type': 'application/json'
         },
         data: {
           mobile_number: phone,

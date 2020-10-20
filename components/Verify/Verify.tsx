@@ -13,11 +13,13 @@ import { Logo, ValidationTitle, Container, ValidationWrapper } from './styled';
 
 export default function Verfiy({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
+  const [verify, setVerify] = useState(false)
   const phone = navigation.getParam('form')
   const onChange = args => ({ value: args[0].nativeEvent.text });
   const dispatch = useDispatch();
   const onSubmit = (form) => {
     console.log({ ...form, phone: phone.phone }, '...form, phone: phone.phone')
+    setVerify(true)
     dispatch(actions.auth.login({ ...form, phone: phone.phone }))
     async function getTokens() {
       const token = await localStorage.get('token');
@@ -36,17 +38,18 @@ export default function Verfiy({ navigation }) {
 
   useEffect(() => {
     async function getTokens() {
-      const token = await localStorage.get('token');
-      console.log(token, 'token')
+      let token = null
       if (token) {
         dispatch(actions.auth.setTokens(token))
         navigation.push('Home');
       } else {
         navigation.push('Auth');
       }
+      token = await localStorage.get('token');
     };
     getTokens();
   }, [])
+
 
   return (
     <>
@@ -77,7 +80,7 @@ export default function Verfiy({ navigation }) {
         {errors.otp && <ErrorText style={{ alignSelf: 'center' }}>Wrong Code</ErrorText>}
         <ButtonsContainer>
           <Button onPress={onSubmitHandler}>
-            <ButtonText>Verify</ButtonText>
+            <ButtonText>{verify ? 'Start' : 'Please Verify'}</ButtonText>
           </Button>
         </ButtonsContainer>
       </Container>
