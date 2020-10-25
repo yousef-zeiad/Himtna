@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text } from 'react-native'
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -20,6 +19,7 @@ export default function CheckNumberForm({ navigation, props }) {
   const onSubmitHandler = useCallback(handleSubmit(onSubmit), [handleSubmit, onSubmit]);
   const refs = {};
   const dispatch = useDispatch()
+
   useEffect(() => {
     async function getTokens() {
       const token = await localStorage.get('token');

@@ -10,6 +10,7 @@ import {
   ErrorText, TextInput,
 } from '../Shared/Shared';
 import { Logo, ValidationTitle, Container, ValidationWrapper } from './styled';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Verfiy({ navigation }) {
   const { control, handleSubmit, errors } = useForm();
@@ -23,7 +24,8 @@ export default function Verfiy({ navigation }) {
     dispatch(actions.auth.login({ ...form, phone: phone.phone }))
     async function getTokens() {
       const token = await localStorage.get('token');
-      console.log(token, 'token')
+      const merchant = await localStorage.get('is_merchant');
+      console.log(merchant)
       if (token) {
         dispatch(actions.auth.setTokens(token))
         navigation.push('Home');
@@ -49,7 +51,6 @@ export default function Verfiy({ navigation }) {
     };
     getTokens();
   }, [])
-
 
   return (
     <>

@@ -15,7 +15,7 @@ const { width } = Dimensions.get('window');
 export default function BrandDetails({ navigation }) {
   const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand');
-  const { is_merchant } = useSelector(state => state.auth)
+  const is_merchant = navigation.getParam('is_merchant');
   return (
     <>
       <Header title={brand.name.en} navigation={navigation} />
@@ -33,16 +33,15 @@ export default function BrandDetails({ navigation }) {
           Offers
         </Text>
         {brand.promotions.map(promo =>
-          <PromotionOffers discounted={promo.discounted} key={promo.id} brands={promo} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion: promo, brand })} />
+          <PromotionOffers discounted={promo.discounted} key={promo.id} brands={promo} navigation={navigation}
+            onPress={() => is_merchant ? null : navigation.push('OfferDetails', { promotion: promo, brand })} />
         )}
-
-        {/* {<PromotionOffers brands={brand.promotions.map(promo=>promo)} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion, brand })} />} */}
 
         {/* if is merchant true you have to return this button */}
       </MainContainer>
       {is_merchant === 1 && <ButtonsContainer>
-        <Button onPress={() => navigation.push('QRPage', { promotion, brand })} >
-          <ButtonText>Get QR Code</ButtonText>
+        <Button onPress={() => navigation.push('QRPage', { promotion, brand, is_merchant })} >
+          <ButtonText>{is_merchant === 1 ? 'Scan Qr' : 'Get QR Code'}</ButtonText>
         </Button>
       </ButtonsContainer>}
     </>

@@ -11,6 +11,8 @@ import {
 } from './styled';
 import { TouchableOpacity, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeView } from '../AuthLoading/styled';
+import localStorage from '../helpers/localSorage'
+import AsyncStorage from '@react-native-community/async-storage';
 const wait = (timeout) => {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
@@ -24,6 +26,7 @@ export default function Home({ navigation }) {
   const [promotions, setProm] = useState([]);
   const [brands, setBrand] = useState([]);
   const [currentCategoryId, setCurrentCategoryId] = useState()
+  const [merchant, setMerchant] = useState()
   const { is_merchant } = useSelector(state => state.auth)
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -48,7 +51,15 @@ export default function Home({ navigation }) {
     fetchPromotion()
     fetchCategories()
   }, []);
-
+  useEffect(() => {
+    async function saveMerchant() {
+      const merchant = await localStorage.get('is_merchant');
+      console.log(merchant, 'merchantmerchant')
+      dispatch(actions.auth.setMerchant(merchant))
+      setMerchant(merchant)
+    }
+    saveMerchant()
+  }, [])
   const toggleBrands = (categoryId) => {
     setCurrentCategoryId(categoryId)
   };
@@ -61,7 +72,7 @@ export default function Home({ navigation }) {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
           <Search navigation={navigation} />
-          {promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
+          {merchant === 1 ? null : promotions ? <PromotionList horizontal contentContainerStyle={{}} showsHorizontalScrollIndicator={false}>
             {promotions.map(promotion =>
               <PromotionTile key={promotion.id} promotion={promotion} navigation={navigation} onPress={() => navigation.push('OfferDetails', { promotion })} />
             )}
@@ -69,7 +80,7 @@ export default function Home({ navigation }) {
               {<ActivityIndicator />}
             </SafeView>}
           <Container>
-            {<ButtonContainer>
+            {merchant === 1 ? null : <ButtonContainer>
               <Title fontSize={16}>
                 All Offers
               </Title>
@@ -82,7 +93,7 @@ export default function Home({ navigation }) {
               </Title>
               </TouchableOpacity>
             </ButtonContainer>}
-            {<CategoriesList bounces horizontal contentContainerStyle={{ paddingLeft: 20 }} showsHorizontalScrollIndicator={false}>
+            {merchant === 1 ? null : <CategoriesList bounces horizontal contentContainerStyle={{ paddingLeft: 20 }} showsHorizontalScrollIndicator={false}>
               {categories.map(category =>
                 <CategoryTile
                   category={category} key={category.id}
@@ -90,16 +101,16 @@ export default function Home({ navigation }) {
                   selected={category.id === currentCategoryId} />)}
             </CategoriesList>}
             <Title fontSize={16} style={{ paddingLeft: 25 }}>
-              All
+              {merchant === 1 ? 'Merchant Brands' : 'All'}
             </Title>
             {<BrandsList
               horizontal={false}
               numColumns={2}
-              data={currentCategoryId ? brands.filter(brand => brand.category_id === currentCategoryId) : brands}
+              data={currentCategoryId ? currentCategoryId === 20 ? brands : brands.filter(brand => brand.category_id === currentCategoryId) : brands}
               keyExtractor={item => item.id}
               renderItem={({ item }) => (<PromotionOffers brands={item} key={item.id}
                 navigation={navigation}
-                onPress={() => navigation.push('BrandDetailsPage', { brand: item, promotions, is_merchant })} />)}
+                onPress={() => navigation.push('BrandDetailsPage', { brand: item, promotions, is_merchant: merchant })} />)}
               onEndReachedThreshold={.5}
               contentContainerStyle={{ justifyContent: 'center', alignSelf: 'center' }}
               nestedScrollEnabled={true}

@@ -9,8 +9,10 @@ import { Logo, Container, OfferTile } from './styled';
 export default function QRScreen({ navigation }) {
   const promotion = navigation.getParam('promotion');
   const brand = navigation.getParam('brand');
+  const is_merchant = navigation.getParam('is_merchant');
   const [promotions, setProm] = useState([]);
-  const { is_merchant } = useSelector(state => state.auth)
+
+  // const { is_merchant } = useSelector(state => state.auth)
   useEffect(() => {
     const fetchPromo = async () => {
       const result = await axios.get(`https://himtna.com/api/v1/qr?promotion_id=${promotion.id}`);

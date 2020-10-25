@@ -35,6 +35,7 @@ export const signup = ({ phone, name, email, is_merchant, description, store }) 
   }
 };
 
+
 export const login = ({ phone, otp }) => {
   if (phone.slice(0, 2) === '07') {
     phone = '00962' + phone.slice(1)
@@ -66,6 +67,15 @@ export const setTokens = (token) => {
     type: 'SET_TOKENS',
     payload: {
       token
+    }
+  }
+}
+
+export const setMerchant = (is_merchant) => {
+  return {
+    type: 'SET_MERCHANT',
+    payload: {
+      is_merchant
     }
   }
 }

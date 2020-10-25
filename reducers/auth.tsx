@@ -33,6 +33,12 @@ export default (state = initialState, action: AnyAction) => {
         ...state,
         token: action.payload
       }
+    case 'SET_MERCHANT':
+      console.log(action.payload, "mmmm")
+      return {
+        ...state,
+        is_merchant: action.payload
+      }
     case 'LOGIN':
       return {
         ...state,
@@ -40,11 +46,11 @@ export default (state = initialState, action: AnyAction) => {
       }
     case 'LOGIN_SUCCESS':
       AsyncStorage.setItem('token', JSON.stringify(action.payload.data.data.token));
-      AsyncStorage.getItem('is_merchant', action.payload.data.data.is_merchant);
+      AsyncStorage.setItem('is_merchant', JSON.stringify(action.payload.data.data.is_merchant));
       return {
         ...state,
         isLoading: false,
-        is_merchant: action.payload.data.data.is_merchant,
+        is_merchant: action.payload.data.data.is_merchant
       }
     case 'LOGIN_FAILURE':
       return {
