@@ -1,7 +1,6 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
-import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator, TransitionPresets} from 'react-navigation-stack';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import AuthLoadingScreen from '../AuthLoading/AuthLoading';
 import CheckNumber from '../CheckNumber/CheckNumber';
 import Home from '../Home/Home';
@@ -26,110 +25,137 @@ const transitionSpec = {
   },
 };
 
-const QRPage = createStackNavigator({
-  QRScreen,
-}, {
-  // mode: 'modal',
-  headerMode: 'none',
-  navigationOptions: {
-    ...TransitionPresets.ModalPresentationIOS,
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
+const QRPage = createStackNavigator(
+  {
+    QRScreen,
   },
-});
-const profilePage = createStackNavigator({
-  Profile,
-}, {
-  // mode: 'modal',
-  headerMode: 'none',
-  navigationOptions: {
-    ...TransitionPresets.ModalPresentationIOS,
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
-  },
-});
-const VerifyPage = createStackNavigator({
-  Verify,
-}, {
-  // mode: 'modal',
-  headerMode: 'none',
-  navigationOptions: {
-    ...TransitionPresets.ModalPresentationIOS,
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
-  },
-});
-const BrandDetailsPage = createStackNavigator({
-  BrandDetails,
-}, {
-  // mode: 'modal',
-  headerMode: 'none',
-  navigationOptions: {
-    ...TransitionPresets.ModalPresentationIOS,
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
-  },
-});
-const CardInsurancePage = createStackNavigator({
-  CardInsurance,
-}, {
-  // mode: 'modal',
-  headerMode: 'none',
-  navigationOptions: {
-    ...TransitionPresets.ModalPresentationIOS,
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
-  },
-});
-
-
-const App = createSharedElementStackNavigator({
-  Home,
-  OfferDetails,
-  QRPage,
-  BrandDetailsPage,
-  CardInsurancePage,
-  profilePage,
-
-}, {
-  mode: 'modal',
-  headerMode: 'none',
-  defaultNavigationOptions: {
-    cardOverlayEnabled: true,
-    gestureEnabled: true,
-    transitionSpec: {
-      open: transitionSpec,
-      close: transitionSpec,
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      ...TransitionPresets.ModalPresentationIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
     },
   },
-});
-const AuthLoading = createStackNavigator({
-  AuthLoadingScreen,
-}, {
-  headerMode: 'none'
-});
+);
+const profilePage = createStackNavigator(
+  {
+    Profile,
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      ...TransitionPresets.ModalPresentationIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  },
+);
 
-const Start = createStackNavigator({
-  CheckNumber,
-  SignUp,
-  VerifyPage
-}, {
-  headerMode: 'none',
-});
+const VerifyPage = createStackNavigator(
+  {
+    Verify,
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      ...TransitionPresets.ModalPresentationIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  },
+);
 
-const AuthStack = createStackNavigator({
-  Start,
-}, {
-  mode: 'modal',
-  headerMode: 'none',
-});
+const BrandDetailsPage = createStackNavigator(
+  {
+    BrandDetails,
+  },
+  {
+    // mode: 'modal',
+    headerMode: 'none',
+    navigationOptions: {
+      ...TransitionPresets.ModalPresentationIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  },
+);
+const CardInsurancePage = createStackNavigator(
+  {
+    CardInsurance,
+  },
+  {
+    headerMode: 'none',
+    navigationOptions: {
+      ...TransitionPresets.ModalPresentationIOS,
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+    },
+  },
+);
 
-const SwitchNavigator = createSwitchNavigator({
-  AuthLoading,
-  App,
-  Auth: AuthStack,
-}, {
-  initialRouteName: 'AuthLoading',
-});
+const App = createSharedElementStackNavigator(
+  {
+    Home,
+    OfferDetails,
+    QRPage,
+    BrandDetailsPage,
+    CardInsurancePage,
+    profilePage,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      cardOverlayEnabled: true,
+      gestureEnabled: true,
+      transitionSpec: {
+        open: transitionSpec,
+        close: transitionSpec,
+      },
+    },
+  },
+);
+
+const AuthLoading = createStackNavigator(
+  {
+    AuthLoadingScreen,
+  },
+  {
+    headerMode: 'none',
+  },
+);
+
+const Start = createStackNavigator(
+  {
+    CheckNumber,
+    SignUp,
+    VerifyPage,
+  },
+  {
+    headerMode: 'none',
+  },
+);
+
+const AuthStack = createStackNavigator(
+  {
+    Start,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
+
+const SwitchNavigator = createSwitchNavigator(
+  {
+    AuthLoading,
+    App,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  },
+);
 
 export default createAppContainer(SwitchNavigator);

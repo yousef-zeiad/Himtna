@@ -1,29 +1,28 @@
-import { AnyAction } from 'redux';
-import AsyncStorage from "@react-native-community/async-storage";
+import {AnyAction} from 'redux';
 
 const initialState = {
   isLoading: false,
   error: null,
   favoritePromotions: [],
-  brand: []
+  brand: [],
 };
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case 'CATEGORY':
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case 'CATEGORY_SUCCESS':
       return {
         ...state,
         isLoading: false,
-      }
+      };
     case 'CATEGORY_ERROR':
       return {
         ...state,
         isLoading: false,
-        error: 'fuck'
+        error: 'fuck',
       };
     case 'BRAND':
       return {
@@ -34,35 +33,35 @@ export default (state = initialState, action: AnyAction) => {
       return {
         ...state,
         isLoading: false,
-      }
+      };
     case 'BRAND_ERROR':
       return {
         ...state,
         isLoading: false,
-        error: 'try'
+        error: 'try',
       };
     case 'PROMOTION':
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case 'PROMOTION_SUCCESS':
       return {
         ...state,
         isLoading: false,
-      }
+      };
     case 'PROMOTION_ERROR':
       return {
         ...state,
         isLoading: false,
-        error: 'fuck'
+        error: 'fuck',
       };
     default:
       return {
-        ...state
+        ...state,
       };
   }
 };
 export interface Interface {
-  isLoading: false,
+  isLoading: false;
 }
